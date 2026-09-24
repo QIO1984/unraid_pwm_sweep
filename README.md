@@ -114,23 +114,29 @@ test points). This means:
 - Fan speed may be low or erratic during the sweep itself. Don't run this
   unattended on a system under real thermal load.
 
-## Example Results
+### Example output
 
-PWM PWM % RPM samples (0.5s apart)
---------------------------------------------------------------
-30 11% 4720 4724 4724 4720 4720 4728
-51 20% 4712 4716 4712 4716 4712 4707
-62 24% 4724 4720 4724 4712 4720 4720
-77 30% 799 780 772 769 769 768     **<<< Here we can see that RPM's are 
-90 35% 767 767 767 767 767 767       unnecessarily fast until PWM% reached
-105 41% 767 767 767 767 768 768      30%. So fan Idle, and Min Speed should
-120 47% 766 766 766 766 766 766      be set at a 30% floor.
-140 54% 767 768 768 767 767 767
-160 62% 767 768 767 767 768 768
-190 74% 766 767 767 768 767 767
-220 86% 4728 4732 4724 4724 4724 4728
-255 100% 4720 4716 4716 4707 4716 4716
+Sweep on a Dell OptiPlex (`dell_smm`), CPU fan:
 
+| PWM | PWM % | RPM samples (0.5s apart)          |
+|-----|-------|-------------------------------------|
+| 30  | 11%   | 4720 4724 4720 4720 4728            |
+| 51  | 20%   | 4712 4716 4712 4716 4712            |
+| 62  | 24%   | 4724 4720 4724 4712 4720            |
+| 77  | 30%   | 799 780 772 769 769 768             |
+| 90  | 35%   | 767 767 767 767 767 767             |
+| 105 | 41%   | 767 767 767 767 768 768             |
+| 120 | 47%   | 766 766 766 766 766 766             |
+| 140 | 54%   | 767 768 768 767 767 767             |
+| 160 | 62%   | 767 768 767 767 768 768             |
+| 190 | 74%   | 766 767 767 768 767 767             |
+| 220 | 86%   | 4728 4732 4724 4724 4724            |
+| 255 | 100%  | 4720 4716 4716 4707 4716 4716       |
+
+RPM stays pinned around ~4720 below 30% PWM and above 86% PWM — a classic
+`dell_smm` dead zone, not a real fan speed change. RPM only tracks PWM
+linearly between 30% and 74%. Based on this, both **Idle Speed** and **Min
+Speed** were set to a 30% floor to stay out of the dead zone.
 
 ## Reading the results
 
