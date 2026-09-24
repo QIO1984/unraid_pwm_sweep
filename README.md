@@ -138,6 +138,13 @@ RPM stays pinned around ~4720 below 30% PWM and above 86% PWM — a classic
 linearly between 30% and 74%. Based on this, both **Idle Speed** and **Min
 Speed** were set to a 30% floor to stay out of the dead zone.
 
+**Another important note here** is that as you can see in this example,
+there are basically two speeds no matter the PWM. This is because older
+Dell hardware essentially have a two-state fan solution: an idle speed, and
+wide-open. Other hardware may have more granularity; however on Dell
+machines with this type of fan control, setting a min-speed will essentially 
+trigger the bios-level fail-safe of wide-open.
+
 ## Reading the results
 
 Look at the PWM column against the RPM samples for each row:
